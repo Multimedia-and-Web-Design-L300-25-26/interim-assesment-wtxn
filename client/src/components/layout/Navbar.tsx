@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -17,10 +17,10 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Prices", href: "/prices" },
-    { name: "Learn", href: "/learn" },
+    { name: "Cryptocurrencies", href: "/cryptocurrencies" },
     { name: "Individuals", href: "/individuals" },
     { name: "Businesses", href: "/businesses" },
+    { name: "Institutions", href: "/institutions" },
     { name: "Developers", href: "/developers" },
     { name: "Company", href: "/company" },
   ];
@@ -28,42 +28,48 @@ export function Navbar() {
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-sm py-3" : "bg-white py-5"
+        isScrolled ? "bg-white shadow-sm py-3" : "bg-white py-4"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-full px-6 lg:px-8">
         <div className="flex justify-between items-center">
           
           {/* Logo */}
           <Link 
             href="/" 
-            className="text-primary text-2xl font-bold tracking-tighter"
+            className="text-primary text-2xl font-bold tracking-tighter flex-shrink-0"
           >
-            coinbase
+            ⓒ
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <nav className="hidden lg:flex items-center space-x-6 flex-1 justify-center">
             {navLinks.map((link) => (
               <Link 
                 key={link.name} 
                 href={link.href}
-                className={`text-sm font-semibold transition-colors duration-200 hover:text-primary ${
-                  location === link.href ? "text-primary" : "text-foreground/80"
-                }`}
+                className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
+                  location === link.href ? "text-foreground" : "text-foreground/70"
+                } hover:text-foreground`}
               >
                 {link.name}
               </Link>
             ))}
           </nav>
 
-          {/* Actions */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <Button variant="ghost" className="font-semibold text-sm hover:text-primary hover:bg-transparent">
-              Sign in
+          {/* Right Actions */}
+          <div className="hidden lg:flex items-center space-x-3">
+            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+              <Search size={20} className="text-foreground/70" />
+            </button>
+            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+              <Moon size={20} className="text-foreground/70" />
+            </button>
+            <Button variant="ghost" className="font-medium text-sm text-foreground/70 hover:text-foreground hover:bg-transparent px-4">
+              Sign In
             </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5">
-              Get started
+            <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+              Sign up
             </Button>
           </div>
 
@@ -82,12 +88,12 @@ export function Navbar() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-border shadow-lg">
-          <div className="px-4 py-6 space-y-4">
+          <div className="px-6 py-6 space-y-4">
             {navLinks.map((link) => (
               <Link 
                 key={link.name} 
                 href={link.href}
-                className="block text-lg font-semibold text-foreground/80 hover:text-primary py-2"
+                className="block text-base font-medium text-foreground/70 hover:text-foreground py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}
@@ -95,10 +101,10 @@ export function Navbar() {
             ))}
             <div className="pt-6 flex flex-col space-y-3 border-t border-border">
               <Button variant="outline" className="w-full justify-center rounded-full text-base py-6">
-                Sign in
+                Sign In
               </Button>
               <Button className="w-full justify-center rounded-full text-base py-6 bg-primary text-white">
-                Get started
+                Sign up
               </Button>
             </div>
           </div>
