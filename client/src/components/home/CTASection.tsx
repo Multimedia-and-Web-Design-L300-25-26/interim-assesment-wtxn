@@ -1,22 +1,35 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import ctaImg from "@assets/image_1773008901047.png";
 
 export function CTASection() {
   return (
-    <section className="py-20 md:py-24 bg-primary relative overflow-hidden">
-      {/* Decorative background shapes */}
-      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-white opacity-5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-white opacity-10 rounded-full blur-2xl"></div>
-      
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-          Start your crypto journey today
-        </h2>
-        <p className="text-blue-100 text-lg md:text-xl mb-10 max-w-2xl mx-auto">
-          Sign up now to build your portfolio and explore the world of digital currency.
-        </p>
-        <Button className="h-14 px-10 rounded-full bg-white text-primary hover:bg-gray-100 font-bold text-lg shadow-xl hover:shadow-2xl transition-all hover:-translate-y-1">
-          Get Started
-        </Button>
+    <section className="py-16 md:py-24 lg:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-5xl md:text-5xl font-bold tracking-tight text-foreground mb-6 leading-tight">
+              Take control of your money
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              Start your portfolio today and discover crypto
+            </p>
+            <form className="flex flex-col sm:flex-row gap-2 w-full max-w-md" onSubmit={(e) => e.preventDefault()}>
+              <Input 
+                type="email" 
+                placeholder="satoshi@nakamoto.com" 
+                className="h-12 px-5 rounded-lg border-border bg-white shadow-sm focus-visible:ring-primary text-base flex-1"
+                required
+              />
+              <Button type="submit" className="h-12 px-7 rounded-lg bg-primary hover:bg-primary/90 text-white font-semibold text-base shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap">
+                Sign up
+              </Button>
+            </form>
+          </div>
+          <div className="relative">
+            <img src={ctaImg} alt="Control your money" className="w-full h-auto" />
+          </div>
+        </div>
       </div>
     </section>
   );
