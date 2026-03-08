@@ -1,0 +1,296 @@
+Create a pixel-accurate front-end clone of the Coinbase website (https://www.coinbase.com).
+
+The goal is to reproduce the exact layout, sections, spacing, and visual style of the Coinbase homepage, but only as a frontend UI clone with no real crypto functionality.
+
+Use React + Vite + Tailwind CSS.
+
+The website must be fully responsive and visually match the Coinbase homepage design as closely as possible.
+
+Technical Stack
+
+React (Vite)
+
+Tailwind CSS
+
+Functional React components
+
+Responsive layout
+
+Reusable components
+
+Modern clean code structure
+
+Global Styling
+
+Font: Inter
+
+Primary color: #0052FF
+
+White background
+
+Minimalist fintech UI
+
+Rounded buttons
+
+Soft shadows
+
+Smooth hover animations
+
+Large whitespace and modern layout
+
+Pages to Include
+
+Create the following pages and routing:
+
+Home
+
+Prices
+
+Learn
+
+Individuals
+
+Businesses
+
+Developers
+
+Company
+
+Use React Router for navigation.
+
+Navigation Bar
+
+Create a sticky navbar identical to Coinbase.
+
+Left side:
+
+Coinbase logo
+
+Center navigation links:
+
+Prices
+
+Learn
+
+Individuals
+
+Businesses
+
+Developers
+
+Company
+
+Right side:
+
+Sign in button
+
+Get started button (blue)
+
+Navbar should remain visible when scrolling.
+
+Hero Section
+
+Two column hero section.
+
+Left side:
+Headline:
+
+"The future of money is here"
+
+Paragraph describing buying, selling and managing cryptocurrency.
+
+Email input field.
+
+Primary button:
+
+"Get Started"
+
+Right side:
+Illustration of a crypto dashboard showing balances and price charts.
+
+Crypto Prices Section
+
+Create a section displaying cryptocurrency cards.
+
+Coins to display:
+
+Bitcoin (BTC)
+
+Ethereum (ETH)
+
+Solana (SOL)
+
+USD Coin (USDC)
+
+Each card must show:
+
+Coin icon
+
+Coin name
+
+Price
+
+Percentage change
+
+Small chart line
+
+Cards should have hover animation.
+
+Features Section
+
+Create three feature cards.
+
+Feature 1
+Title: Buy Crypto
+Description: Easily buy and sell popular cryptocurrencies.
+
+Feature 2
+Title: Secure Wallet
+Description: Store digital assets securely.
+
+Feature 3
+Title: Earn Rewards
+Description: Earn crypto rewards through staking and learning.
+
+Each card should contain an icon and short description.
+
+How It Works Section
+
+Three step process layout with icons.
+
+Step 1
+Create an account.
+
+Step 2
+Add a payment method.
+
+Step 3
+Start trading crypto.
+
+Mobile App Section
+
+Promote the Coinbase mobile app.
+
+Include:
+
+Phone mockup
+
+Text encouraging users to manage crypto anywhere.
+
+Headline example:
+"Buy, sell, and manage your crypto on the go."
+
+Learn Crypto Section
+
+Create educational cards linking to crypto learning resources.
+
+Examples:
+
+Crypto basics
+
+Blockchain explained
+
+Trading tips
+
+Wallet security
+
+Cards should have images and titles.
+
+Call To Action Section
+
+Large banner section.
+
+Headline:
+"Start your crypto journey today"
+
+Button:
+"Get Started"
+
+Background should be Coinbase blue.
+
+Footer
+
+Create a large multi-column footer.
+
+Sections:
+Company
+
+About
+
+Careers
+
+Blog
+
+Learn
+
+Crypto basics
+
+Guides
+
+Tutorials
+
+Support
+
+Help center
+
+Contact
+
+Developers
+
+API
+
+Documentation
+
+Include social icons:
+
+Twitter
+
+Facebook
+
+LinkedIn
+
+Instagram
+
+Components Structure
+
+Organize the project with reusable components.
+
+src/
+components/
+Navbar.jsx
+Hero.jsx
+CryptoCard.jsx
+Features.jsx
+HowItWorks.jsx
+MobileApp.jsx
+LearnSection.jsx
+CTA.jsx
+Footer.jsx
+
+pages/
+Home.jsx
+
+App.jsx
+main.jsx
+
+Extra UI Features
+
+Add:
+
+Smooth scroll animations
+
+Button hover transitions
+
+Responsive grid layouts
+
+Sticky navbar
+
+Mobile navigation menu
+
+Clean fintech design similar to Coinbase
+
+Final Requirement
+
+The final result should visually resemble the Coinbase homepage interface and behave like a modern fintech landing page.
+
+Focus on clean UI, responsiveness, and component structure.
