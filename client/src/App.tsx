@@ -8,14 +8,21 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Placeholder from "@/pages/Placeholder";
 import SignUp from "@/pages/SignUp";
+import SignIn from "@/pages/SignIn";
+import Explore from "@/pages/Explore";
+import AssetDetail from "@/pages/AssetDetail";
+import Learn from "@/pages/Learn";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/signup" component={SignUp} />
+      <Route path="/signin" component={SignIn} />
+      <Route path="/explore" component={Explore} />
+      <Route path="/asset/:symbol" component={AssetDetail} />
+      <Route path="/learn" component={Learn} />
       <Route path="/prices" component={Placeholder} />
-      <Route path="/learn" component={Placeholder} />
       <Route path="/individuals" component={Placeholder} />
       <Route path="/businesses" component={Placeholder} />
       <Route path="/developers" component={Placeholder} />
