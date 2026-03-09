@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "wouter";
 import heroImage from "@assets/image_1773008660009.png";
 
 export function Hero() {
@@ -29,17 +30,19 @@ export function Hero() {
               Trade crypto and more on a platform you can trust.
             </p>
             
-            <form className="flex flex-col sm:flex-row gap-2 w-full max-w-md" onSubmit={(e) => e.preventDefault()}>
+            <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md">
               <Input 
                 type="email" 
                 placeholder="satoshi@nakamoto.com" 
                 className="h-12 px-5 rounded-lg border-border bg-white shadow-sm focus-visible:ring-primary text-base flex-1"
                 required
               />
-              <Button type="submit" className="h-12 px-7 rounded-lg bg-primary hover:bg-primary/90 text-white font-semibold text-base shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap">
-                Sign up
-              </Button>
-            </form>
+              <Link href="/signup">
+                <Button className="h-12 px-7 rounded-lg bg-primary hover:bg-primary/90 text-white font-semibold text-base shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap">
+                  Sign up
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -68,9 +68,11 @@ export function Navbar() {
             <Button variant="ghost" className="font-medium text-sm text-foreground/70 hover:text-foreground hover:bg-transparent px-4">
               Sign In
             </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-semibold shadow-sm hover:shadow-md transition-all duration-200">
-              Sign up
-            </Button>
+            <Link href="/signup">
+              <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+                Sign up
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
