@@ -5,44 +5,45 @@ import heroImage from "@assets/image_1773008660009.png";
 
 export function Hero() {
   return (
-    <section className="pt-28 pb-16 md:pt-32 md:pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-white">
+    <section className="pt-24 pb-0 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-end">
+
           {/* Left: Phone Mockup */}
-          <div className="relative order-2 lg:order-1">
-            <div className="rounded-3xl overflow-hidden shadow-2xl">
-              <img 
-                src={heroImage}
-                alt="Crypto Dashboard Mockup" 
-                className="w-full h-auto object-cover"
-              />
-            </div>
+          <div className="relative order-2 lg:order-1 flex items-end">
+            <img
+              src={heroImage}
+              alt="Coinbase App Mockup"
+              className="w-full h-auto object-contain max-h-[560px] object-bottom"
+            />
           </div>
 
           {/* Right: Content */}
-          <div className="max-w-2xl order-1 lg:order-2">
-            <h1 className="text-5xl md:text-6xl lg:text-6xl font-bold tracking-tight text-foreground leading-tight mb-6">
+          <div className="order-1 lg:order-2 pt-16 pb-16">
+            <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.05] mb-6">
               The future of finance is here.
             </h1>
-            
-            <p className="text-base md:text-lg text-foreground/70 mb-8 max-w-md">
-              Trade crypto and more on a platform you can trust.
+            <p className="text-base text-foreground/70 mb-2">
+              Trade crypto, stocks,<sup>2</sup> and more on a platform you can trust.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-2 w-full max-w-md">
-              <Input 
-                type="email" 
-                placeholder="satoshi@nakamoto.com" 
-                className="h-12 px-5 rounded-lg border-border bg-white shadow-sm focus-visible:ring-primary text-base flex-1"
-                required
+            <p className="text-base text-foreground/70 mb-8">
+              Sign up and get up to $2,000 in crypto.<sup>1</sup>
+            </p>
+            <div className="flex flex-col sm:flex-row gap-2 w-full max-w-sm">
+              <Input
+                type="email"
+                placeholder="satoshi@nakamoto.com"
+                className="h-12 px-4 rounded-lg border-border bg-white shadow-sm focus-visible:ring-primary text-sm flex-1"
               />
               <Link href="/signup">
-                <Button className="h-12 px-7 rounded-lg bg-primary hover:bg-primary/90 text-white font-semibold text-base shadow-sm hover:shadow-md transition-all duration-200 whitespace-nowrap">
+                <Button className="h-12 px-6 rounded-lg bg-primary hover:bg-primary/90 text-white font-semibold text-sm shadow-sm whitespace-nowrap">
                   Sign up
                 </Button>
               </Link>
             </div>
+            <p className="text-xs text-foreground/40 mt-4">
+              Securities offered by Coinbase Capital Markets (member SIPC, FINRA). Listed futures and swaps are offered via Coinbase Financial Markets ("CFM"), a NFA member firm. Crypto offered by Coinbase Inc.
+            </p>
           </div>
         </div>
       </div>

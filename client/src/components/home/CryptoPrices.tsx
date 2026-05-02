@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { useState } from "react";
 
 interface Coin {
   id: string;
@@ -10,97 +10,126 @@ interface Coin {
   image: string;
   current_price: number;
   price_change_percentage_24h: number;
+  market_cap_rank: number;
 }
 
 function formatPrice(price: number) {
   if (price >= 1000) return "$" + price.toLocaleString("en-US", { maximumFractionDigits: 2 });
-  if (price >= 1) return "$" + price.toFixed(2);
+  if (price >= 1) return "$" + price.toFixed(4);
   return "$" + price.toFixed(4);
 }
 
 export function CryptoPrices() {
+  const [tab, setTab] = useState<"tradable" | "gainers" | "new">("tradable");
+
   const { data: coins, isLoading } = useQuery<Coin[]>({
     queryKey: ["/coingecko/markets"],
     queryFn: async () => {
       const res = await fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1"
       );
-      if (!res.ok) throw new Error("Failed to fetch");
+      if (!res.ok) throw new Error("Failed");
       return res.json();
     },
     refetchInterval: 60000,
     staleTime: 30000,
   });
 
-  const displayCoins = coins?.slice(0, 6);
+  const displayCoins = (() => {
+    if (!coins) return [];
+    if (tab === "tradable") return coins.slice(0, 6);
+    if (tab === "gainers") return [...coins].sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h).slice(0, 6);
+    return coins.slice(10, 16);
+  })();
 
   return (
-    <section className="py-16 md:py-24 lg:py-32 bg-white">
+    <section className="py-20 bg-[#f0f2f5]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+          {/* Left */}
           <div>
-            <h2 className="text-5xl font-bold tracking-tight text-foreground mb-6 leading-tight">
-              Explore crypto like Bitcoin, Ethereum, and Dogecoin.
+            <h2 className="text-5xl font-bold text-foreground leading-tight mb-5">
+              Explore millions of tokens and stocks, all in one place.
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              Simply and securely buy, sell, and manage hundreds of cryptocurrencies.
+            <p className="text-base text-foreground/60 mb-8">
+              One trusted account for trading everything—from stocks to Bitcoin.<sup>1</sup>
             </p>
             <Link href="/explore">
-              <Button className="bg-black text-white hover:bg-black/90 rounded-full px-8 font-semibold py-6 text-base">
-                See more assets
-              </Button>
+              <button className="bg-black text-white rounded-full px-7 py-3.5 font-semibold text-sm hover:bg-black/80 transition-colors">
+                Get started
+              </button>
             </Link>
           </div>
 
-          <div className="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
-            {isLoading
-              ? Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="flex items-center justify-between px-5 py-4 border-b border-border last:border-0 animate-pulse">
-                    <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 bg-gray-200 rounded-full" />
-                      <div>
-                        <div className="h-4 w-20 bg-gray-200 rounded mb-1" />
-                        <div className="h-3 w-12 bg-gray-100 rounded" />
+          {/* Right: Dark crypto widget */}
+          <div className="bg-[#141414] rounded-2xl overflow-hidden">
+            {/* Tabs */}
+            <div className="flex border-b border-white/10 px-2 pt-2">
+              {[
+                { key: "tradable", label: "Tradable" },
+                { key: "gainers", label: "Top gainers" },
+                { key: "new", label: "New on Coinbase" },
+              ].map(({ key, label }) => (
+                <button
+                  key={key}
+                  onClick={() => setTab(key as typeof tab)}
+                  className={`px-4 py-3 text-sm font-medium rounded-t transition-colors ${
+                    tab === key
+                      ? "text-white bg-white/10"
+                      : "text-white/40 hover:text-white/70"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {/* Coin list */}
+            <div>
+              {isLoading
+                ? Array.from({ length: 6 }).map((_, i) => (
+                    <div key={i} className="flex items-center justify-between px-5 py-4 animate-pulse border-b border-white/5 last:border-0">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-white/10" />
+                        <div className="h-4 w-24 bg-white/10 rounded" />
+                      </div>
+                      <div className="text-right">
+                        <div className="h-4 w-20 bg-white/10 rounded mb-1 ml-auto" />
+                        <div className="h-3 w-12 bg-white/10 rounded ml-auto" />
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="h-4 w-16 bg-gray-200 rounded mb-1 ml-auto" />
-                      <div className="h-3 w-10 bg-gray-100 rounded ml-auto" />
-                    </div>
-                  </div>
-                ))
-              : displayCoins?.map((coin) => {
-                  const isUp = coin.price_change_percentage_24h >= 0;
-                  return (
-                    <Link href={`/asset/${coin.id}`} key={coin.id}>
-                      <div
-                        className="flex items-center justify-between px-5 py-4 border-b border-border last:border-0 hover:bg-gray-50 transition-colors cursor-pointer"
-                        data-testid={`row-home-coin-${coin.id}`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <img src={coin.image} alt={coin.name} className="w-9 h-9 rounded-full" />
-                          <div>
-                            <div className="font-semibold text-sm text-foreground">{coin.name}</div>
-                            <div className="text-xs text-muted-foreground uppercase">{coin.symbol}</div>
+                  ))
+                : displayCoins.map((coin) => {
+                    const isUp = coin.price_change_percentage_24h >= 0;
+                    return (
+                      <Link href={`/asset/${coin.id}`} key={coin.id}>
+                        <div
+                          className="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors cursor-pointer border-b border-white/5 last:border-0"
+                          data-testid={`row-widget-${coin.id}`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full" />
+                            <span className="text-white font-medium text-sm">{coin.name}</span>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-white font-semibold text-sm">
+                              {formatPrice(coin.current_price)}
+                            </div>
+                            <div
+                              className={`flex items-center justify-end gap-0.5 text-xs font-semibold ${
+                                isUp ? "text-green-400" : "text-red-400"
+                              }`}
+                            >
+                              {isUp ? <ArrowUpRight size={11} /> : <ArrowDownRight size={11} />}
+                              {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+                            </div>
                           </div>
                         </div>
-                        <div className="text-right">
-                          <div className="font-semibold text-sm text-foreground">
-                            {formatPrice(coin.current_price)}
-                          </div>
-                          <div
-                            className={`flex items-center justify-end gap-0.5 text-xs font-semibold ${
-                              isUp ? "text-green-600" : "text-red-600"
-                            }`}
-                          >
-                            {isUp ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
-                            {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
+                      </Link>
+                    );
+                  })}
+            </div>
           </div>
         </div>
       </div>

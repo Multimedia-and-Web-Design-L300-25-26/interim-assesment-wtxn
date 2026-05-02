@@ -1,17 +1,15 @@
 import { Link, useLocation } from "wouter";
-import { Menu, X, Search, Moon } from "lucide-react";
+import { Menu, X, Search, Globe } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
-export function Navbar() {
+export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -26,31 +24,32 @@ export function Navbar() {
   ];
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-sm py-3" : "bg-white py-4"
-      }`}
-    >
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "shadow-sm" : ""} bg-white`}>
+      {showBanner && (
+        <div className="bg-[#1a1a2e] text-white text-center py-2.5 px-4 text-sm font-medium">
+          <a href="#" className="hover:underline">
+            Unlock One month of rewards with Coinbase One. Join now for 20% off your first year of an annual plan.
+            <span className="ml-1">→</span>
+          </a>
+        </div>
+      )}
       <div className="max-w-full px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          
+        <div className="flex justify-between items-center h-14">
+
           {/* Logo */}
-          <Link 
-            href="/" 
-            className="text-primary text-2xl font-bold tracking-tighter flex-shrink-0"
-          >
+          <Link href="/" className="text-primary text-2xl font-bold tracking-tighter flex-shrink-0">
             ⓒ
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <nav className="hidden lg:flex items-center space-x-6 flex-1 justify-center">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
+              <Link
+                key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                  location === link.href ? "text-foreground" : "text-foreground/70"
-                } hover:text-foreground`}
+                className={`text-sm font-medium transition-colors whitespace-nowrap ${
+                  location === link.href ? "text-foreground" : "text-foreground/70 hover:text-foreground"
+                }`}
               >
                 {link.name}
               </Link>
@@ -58,18 +57,20 @@ export function Navbar() {
           </nav>
 
           {/* Right Actions */}
-          <div className="hidden lg:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center space-x-1">
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <Search size={20} className="text-foreground/70" />
+              <Search size={18} className="text-foreground/70" />
             </button>
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <Moon size={20} className="text-foreground/70" />
+              <Globe size={18} className="text-foreground/70" />
             </button>
-            <Button variant="ghost" className="font-medium text-sm text-foreground/70 hover:text-foreground hover:bg-transparent px-4">
-              Sign In
-            </Button>
+            <Link href="/signin">
+              <Button variant="ghost" className="font-medium text-sm text-foreground/80 hover:text-foreground hover:bg-gray-100 px-4 rounded-full">
+                Sign In
+              </Button>
+            </Link>
             <Link href="/signup">
-              <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-semibold shadow-sm hover:shadow-md transition-all duration-200">
+              <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-5 font-semibold text-sm shadow-sm">
                 Sign up
               </Button>
             </Link>
@@ -77,10 +78,7 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden">
-            <button 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-foreground p-2"
-            >
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-foreground p-2">
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
@@ -92,8 +90,8 @@ export function Navbar() {
         <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-border shadow-lg">
           <div className="px-6 py-6 space-y-4">
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
+              <Link
+                key={link.name}
                 href={link.href}
                 className="block text-base font-medium text-foreground/70 hover:text-foreground py-2"
                 onClick={() => setMobileMenuOpen(false)}
@@ -101,13 +99,13 @@ export function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <div className="pt-6 flex flex-col space-y-3 border-t border-border">
-              <Button variant="outline" className="w-full justify-center rounded-full text-base py-6">
-                Sign In
-              </Button>
-              <Button className="w-full justify-center rounded-full text-base py-6 bg-primary text-white">
-                Sign up
-              </Button>
+            <div className="pt-4 flex flex-col space-y-3 border-t border-border">
+              <Link href="/signin">
+                <Button variant="outline" className="w-full rounded-full py-6">Sign In</Button>
+              </Link>
+              <Link href="/signup">
+                <Button className="w-full rounded-full py-6 bg-primary text-white">Sign up</Button>
+              </Link>
             </div>
           </div>
         </div>
