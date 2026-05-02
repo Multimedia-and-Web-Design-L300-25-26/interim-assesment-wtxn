@@ -12,6 +12,7 @@ import SignIn from "@/pages/SignIn";
 import Explore from "@/pages/Explore";
 import AssetDetail from "@/pages/AssetDetail";
 import Learn from "@/pages/Learn";
+import Cryptocurrencies from "@/pages/Cryptocurrencies";
 
 function Router() {
   return (
@@ -22,12 +23,12 @@ function Router() {
       <Route path="/explore" component={Explore} />
       <Route path="/asset/:symbol" component={AssetDetail} />
       <Route path="/learn" component={Learn} />
+      <Route path="/cryptocurrencies" component={Cryptocurrencies} />
       <Route path="/prices" component={Placeholder} />
       <Route path="/individuals" component={Placeholder} />
       <Route path="/businesses" component={Placeholder} />
       <Route path="/developers" component={Placeholder} />
       <Route path="/company" component={Placeholder} />
-      <Route path="/cryptocurrencies" component={Placeholder} />
       <Route path="/institutions" component={Placeholder} />
       
       {/* Fallback to 404 */}

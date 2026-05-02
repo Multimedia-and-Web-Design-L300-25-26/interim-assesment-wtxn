@@ -64,7 +64,7 @@ function FooterLink({ label }: { label: string }) {
 
 export function Footer() {
   return (
-    <footer className="bg-white border-t border-border">
+    <footer className="bg-[#f5f5f5] border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-10">
 
         {/* Top: Coinbase logo */}
