@@ -4,6 +4,7 @@ import {
   TrendingUp, BarChart2, Layers, LineChart, Tag, Sliders,
   CreditCard, Wallet, Percent, DollarSign, PiggyBank, Smartphone,
   Briefcase, Settings, ArrowRight, Clock, Eye, Repeat2, LayoutGrid,
+  Zap, Building2, Landmark, Rocket,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -52,6 +53,20 @@ const institutionsMenu = {
     { icon: Globe,    label: "International Exchange", badge: null, desc: "Access perpetual futures markets" },
     { icon: Settings, label: "Derivatives Exchange",   badge: null, desc: "Trade an accessible futures market" },
     { icon: Layers,   label: "Verified Pools",         badge: null, desc: "Transparent, verified liquidity pools" },
+  ],
+};
+
+const developersMenu = {
+  platform: [
+    { icon: Zap,      label: "Payments",    badge: null, desc: "Fast and global stablecoin payments with a single integration" },
+    { icon: BarChart2, label: "Trading",    badge: null, desc: "Launch crypto trading and custody for your users" },
+    { icon: Wallet,   label: "Wallets",     badge: null, desc: "Deploy customizable and scalable wallets for your business" },
+    { icon: DollarSign, label: "Stablecoins", badge: null, desc: "Access USDC and Coinbase Custom Stablecoins" },
+  ],
+  solutions: [
+    { icon: Landmark, label: "Banks & Brokerages", badge: null, desc: "Secure, regulated offerings for retail, private banking, & institutional clients" },
+    { icon: Building2, label: "Payment Firms",     badge: null, desc: "Near-instant, low-cost, global payment rails for modern providers" },
+    { icon: Rocket,   label: "Startups",           badge: null, desc: "Launch your business with the world's leader in crypto" },
   ],
 };
 
@@ -236,8 +251,61 @@ function InstitutionsDropdown({ onClose }: { onClose: () => void }) {
   );
 }
 
+// ── Developers dropdown ────────────────────────────────────────────────────────
+function DevelopersDropdown({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="absolute top-full left-0 right-0 bg-white border-b border-border shadow-xl z-50">
+      <div className="max-w-[1200px] mx-auto px-8 py-6 flex gap-8">
+        {/* Coinbase Developer Platform column */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1.5 mb-3">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Coinbase Developer Platform</p>
+            <ArrowRight size={11} className="text-muted-foreground" />
+          </div>
+          <div className="space-y-1">
+            {developersMenu.platform.map(item => (
+              <MenuItem key={item.label} {...item} onClose={onClose} />
+            ))}
+          </div>
+        </div>
+        {/* Solutions column */}
+        <div className="flex-1 min-w-0">
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Solutions for any company</p>
+          <div className="space-y-1">
+            {developersMenu.solutions.map(item => (
+              <MenuItem key={item.label} {...item} onClose={onClose} />
+            ))}
+          </div>
+        </div>
+        {/* Promo */}
+        <div className="w-64 shrink-0 flex items-start gap-4">
+          <div className="w-28 h-24 rounded-2xl bg-gray-100 border border-border flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
+            <svg viewBox="0 0 80 60" className="w-24 h-20" fill="none">
+              <rect x="5" y="5" width="70" height="50" rx="6" fill="white" stroke="#e5e7eb" strokeWidth="1"/>
+              <line x1="5" y1="40" x2="75" y2="40" stroke="#e5e7eb" strokeWidth="0.8"/>
+              <polyline points="10,35 22,28 34,32 46,20 58,24 70,15" stroke="#0052FF" strokeWidth="2" fill="none" strokeLinejoin="round"/>
+              <circle cx="46" cy="20" r="3" fill="#0052FF"/>
+              <rect x="38" y="11" width="20" height="12" rx="2" fill="#0052FF"/>
+              <text x="40" y="20" fontSize="5" fill="white" fontFamily="sans-serif">$24.6B</text>
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-foreground leading-tight mb-3">
+              World class crypto infrastructure.{" "}
+              <span className="font-normal text-muted-foreground">Discover Coinbase's complete crypto-as-a-service platform.</span>
+            </h3>
+            <button onClick={onClose} className="text-sm font-semibold text-foreground underline hover:no-underline">
+              Learn more
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Navbar ─────────────────────────────────────────────────────────────────────
-type DropdownName = "individuals" | "businesses" | "institutions" | null;
+type DropdownName = "individuals" | "businesses" | "institutions" | "developers" | null;
 
 export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
   const [location] = useLocation();
@@ -270,7 +338,7 @@ export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
     { name: "Individuals",      href: "/individuals",      dropdown: "individuals" },
     { name: "Businesses",       href: "/businesses",       dropdown: "businesses" },
     { name: "Institutions",     href: "/institutions",     dropdown: "institutions" },
-    { name: "Developers",       href: "/developers",       dropdown: null },
+    { name: "Developers",       href: "/developers",       dropdown: "developers" },
     { name: "Company",          href: "/company",          dropdown: null },
   ];
 
@@ -362,6 +430,7 @@ export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
       {activeDropdown === "individuals"  && <IndividualsDropdown  onClose={closeAll} />}
       {activeDropdown === "businesses"   && <BusinessesDropdown   onClose={closeAll} />}
       {activeDropdown === "institutions" && <InstitutionsDropdown onClose={closeAll} />}
+      {activeDropdown === "developers"   && <DevelopersDropdown   onClose={closeAll} />}
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
