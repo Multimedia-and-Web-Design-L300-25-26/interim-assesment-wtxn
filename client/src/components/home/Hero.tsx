@@ -5,25 +5,31 @@ import heroImage from "@assets/image_1777735407781.png";
 
 export function Hero() {
   return (
-    <section className="pt-24 pb-8 bg-white overflow-hidden">
+    <section className="pt-24 pb-0 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-end">
 
-          {/* Left: Phone Mockup — fixed width so only the phone portion shows */}
-          <div
-            className="relative flex-shrink-0 overflow-hidden rounded-2xl order-2 lg:order-1"
-            style={{ width: "470px", height: "490px" }}
-          >
-            <img
-              src={heroImage}
-              alt="Coinbase App Mockup"
-              className="absolute top-0 left-0 h-full"
-              style={{ width: "auto", maxWidth: "none" }}
-            />
+          {/* Left: Phone Mockup + disclaimer */}
+          <div className="order-2 lg:order-1 flex flex-col gap-4">
+            {/* Overflow-hidden container crops to just the phone portion */}
+            <div
+              className="relative overflow-hidden rounded-2xl"
+              style={{ width: "470px", height: "490px" }}
+            >
+              <img
+                src={heroImage}
+                alt="Coinbase App Mockup"
+                className="absolute top-0 left-0 h-full"
+                style={{ width: "auto", maxWidth: "none" }}
+              />
+            </div>
+            <p className="text-xs text-foreground/40 max-w-sm">
+              Securities offered by Coinbase Capital Markets (member SIPC, FINRA). Listed futures and swaps are offered via Coinbase Financial Markets ("CFM"), a NFA member firm. Crypto offered by Coinbase Inc.
+            </p>
           </div>
 
           {/* Right: Content */}
-          <div className="order-1 lg:order-2 flex-1">
+          <div className="order-1 lg:order-2 flex-1 pb-8">
             <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.05] mb-6">
               The future of finance is here.
             </h1>
@@ -45,9 +51,6 @@ export function Hero() {
                 </Button>
               </Link>
             </div>
-            <p className="text-xs text-foreground/40 mt-4 max-w-md">
-              Securities offered by Coinbase Capital Markets (member SIPC, FINRA). Listed futures and swaps are offered via Coinbase Financial Markets ("CFM"), a NFA member firm. Crypto offered by Coinbase Inc.
-            </p>
           </div>
 
         </div>
