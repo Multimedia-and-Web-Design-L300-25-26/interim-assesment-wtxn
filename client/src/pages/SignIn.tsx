@@ -2,13 +2,26 @@ import { useState } from "react";
 import { Link } from "wouter";
 
 function CoinbaseLogo() {
+  // Pure C-arc shape: outer ring R=15.5, inner ring r=9.5
+  // Opening on right side between y=11.75 and y=20.25 (centre y=16)
+  const R = 15.5, r = 9.5, cx = 16, cy = 16;
+  const dy = 4.25;
+  const ox = cx + Math.sqrt(R * R - dy * dy); // ≈ 30.91
+  const ix = cx + Math.sqrt(r * r - dy * dy); // ≈ 24.50
+  const barTopY = cy - dy;    // 11.75
+  const barBotY = cy + dy;    // 20.25
+
+  const d = [
+    `M ${ox.toFixed(2)} ${barTopY}`,
+    `A ${R} ${R} 0 1 0 ${ox.toFixed(2)} ${barBotY}`,
+    `L ${ix.toFixed(2)} ${barBotY}`,
+    `A ${r} ${r} 0 1 1 ${ix.toFixed(2)} ${barTopY}`,
+    "Z",
+  ].join(" ");
+
   return (
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="16" cy="16" r="16" fill="#0052FF"/>
-      <path
-        d="M16 6C10.477 6 6 10.477 6 16C6 21.523 10.477 26 16 26C20.691 26 24.641 22.937 25.714 18.667H20.952C20.048 20.495 18.162 21.733 16 21.733C12.836 21.733 10.267 19.164 10.267 16C10.267 12.836 12.836 10.267 16 10.267C18.162 10.267 20.048 11.505 20.952 13.333H25.714C24.641 9.063 20.691 6 16 6Z"
-        fill="white"
-      />
+      <path d={d} fill="#0052FF" />
     </svg>
   );
 }
