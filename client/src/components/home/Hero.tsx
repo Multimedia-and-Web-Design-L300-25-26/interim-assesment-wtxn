@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "wouter";
-import heroImage from "@assets/image_1773008660009.png";
+import heroImage from "@assets/image_1777735407781.png";
 
 export function Hero() {
   return (
@@ -10,11 +10,11 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-end">
 
           {/* Left: Phone Mockup */}
-          <div className="relative order-2 lg:order-1 flex items-end">
+          <div className="relative order-2 lg:order-1 overflow-hidden rounded-2xl" style={{ aspectRatio: "1 / 1" }}>
             <img
               src={heroImage}
               alt="Coinbase App Mockup"
-              className="w-full h-auto object-contain max-h-[560px] object-bottom"
+              className="absolute inset-0 w-[200%] h-full object-cover object-left-top"
             />
           </div>
 
