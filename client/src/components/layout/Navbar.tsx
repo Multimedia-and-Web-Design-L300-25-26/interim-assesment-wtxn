@@ -419,8 +419,8 @@ export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
         <div className="flex justify-between items-center h-14">
 
           {/* Logo */}
-          <Link href="/" onClick={closeAll} className="text-primary text-2xl font-bold tracking-tighter flex-shrink-0">
-            ⓒ
+          <Link href="/" onClick={closeAll} className="flex-shrink-0">
+            <img src="/coinbase-logo.png" alt="Coinbase" className="h-8 w-8" />
           </Link>
 
           {/* Desktop nav */}

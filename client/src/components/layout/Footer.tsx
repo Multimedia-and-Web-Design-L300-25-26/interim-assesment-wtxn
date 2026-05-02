@@ -69,7 +69,7 @@ export function Footer() {
 
         {/* Top: Coinbase logo */}
         <div className="mb-10">
-          <Link href="/" className="text-primary text-2xl font-bold">ⓒ</Link>
+          <Link href="/"><img src="/coinbase-logo.png" alt="Coinbase" className="h-8 w-8" /></Link>
         </div>
 
         {/* Main grid */}
