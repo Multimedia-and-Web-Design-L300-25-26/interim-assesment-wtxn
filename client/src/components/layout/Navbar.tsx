@@ -3,7 +3,7 @@ import {
   Menu, X, Search, Globe,
   TrendingUp, BarChart2, Layers, LineChart, Tag, Sliders,
   CreditCard, Wallet, Percent, DollarSign, PiggyBank, Smartphone,
-  Briefcase, Settings, ArrowRight,
+  Briefcase, Settings, ArrowRight, Clock, Eye, Repeat2, LayoutGrid,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,21 @@ const businessesMenu = {
   right: [
     { icon: CreditCard, label: "Payments",       badge: null, desc: "The stablecoin payments stack for commerce platforms" },
     { icon: Tag,        label: "Token Manager",  badge: null, desc: "The platform for token distributions, vesting, and lockups" },
+  ],
+};
+
+const institutionsMenu = {
+  prime: [
+    { icon: Clock,      label: "Trading and Financing", badge: null, desc: "Professional prime brokerage services" },
+    { icon: Eye,        label: "Custody",                badge: null, desc: "Securely store all your digital assets" },
+    { icon: Percent,    label: "Staking",                badge: null, desc: "Explore staking across our products" },
+    { icon: LayoutGrid, label: "Onchain Wallet",         badge: null, desc: "Institutional-grade wallet to get onchain" },
+  ],
+  markets: [
+    { icon: Repeat2,  label: "Exchange",              badge: null, desc: "Spot markets for high-frequency trading" },
+    { icon: Globe,    label: "International Exchange", badge: null, desc: "Access perpetual futures markets" },
+    { icon: Settings, label: "Derivatives Exchange",   badge: null, desc: "Trade an accessible futures market" },
+    { icon: Layers,   label: "Verified Pools",         badge: null, desc: "Transparent, verified liquidity pools" },
   ],
 };
 
@@ -158,8 +173,71 @@ function BusinessesDropdown({ onClose }: { onClose: () => void }) {
   );
 }
 
+// ── Institutions dropdown ──────────────────────────────────────────────────────
+function InstitutionsDropdown({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="absolute top-full left-0 right-0 bg-white border-b border-border shadow-xl z-50">
+      <div className="max-w-[1200px] mx-auto px-8 py-6 flex gap-8">
+        {/* Prime column */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1.5 mb-3">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Prime</p>
+            <ArrowRight size={11} className="text-muted-foreground" />
+          </div>
+          <div className="space-y-1">
+            {institutionsMenu.prime.map(item => (
+              <MenuItem key={item.label} {...item} onClose={onClose} />
+            ))}
+          </div>
+        </div>
+        {/* Markets column */}
+        <div className="flex-1 min-w-0">
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Markets</p>
+          <div className="space-y-1">
+            {institutionsMenu.markets.map(item => (
+              <MenuItem key={item.label} {...item} onClose={onClose} />
+            ))}
+          </div>
+        </div>
+        {/* Promo */}
+        <div className="w-64 shrink-0 flex items-start gap-4">
+          {/* Dotted globe illustration */}
+          <div className="w-28 h-24 rounded-2xl bg-primary flex items-center justify-center shrink-0 shadow-lg overflow-hidden">
+            <svg viewBox="0 0 80 80" className="w-20 h-20 opacity-90" fill="none">
+              {/* Simple dotted-world feel using circles in a grid */}
+              {Array.from({ length: 10 }).map((_, row) =>
+                Array.from({ length: 10 }).map((_, col) => {
+                  const cx = 8 + col * 7;
+                  const cy = 8 + row * 7;
+                  const dx = cx - 40, dy = cy - 40;
+                  const inCircle = dx * dx + dy * dy < 38 * 38;
+                  return inCircle ? (
+                    <circle key={`${row}-${col}`} cx={cx} cy={cy} r="2" fill="white" opacity="0.7" />
+                  ) : null;
+                })
+              )}
+              {/* Continent-like blob overlay */}
+              <ellipse cx="35" cy="38" rx="14" ry="18" fill="white" opacity="0.15" />
+              <ellipse cx="54" cy="34" rx="8" ry="12" fill="white" opacity="0.15" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-muted-foreground mb-0.5">Our clients</p>
+            <h3 className="text-xl font-bold text-foreground leading-tight mb-3">
+              Trusted by institutions and government.
+            </h3>
+            <button onClick={onClose} className="text-sm font-semibold text-foreground underline hover:no-underline flex items-center gap-1">
+              Learn more
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Navbar ─────────────────────────────────────────────────────────────────────
-type DropdownName = "individuals" | "businesses" | null;
+type DropdownName = "individuals" | "businesses" | "institutions" | null;
 
 export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
   const [location] = useLocation();
@@ -191,7 +269,7 @@ export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
     { name: "Cryptocurrencies", href: "/cryptocurrencies", dropdown: null },
     { name: "Individuals",      href: "/individuals",      dropdown: "individuals" },
     { name: "Businesses",       href: "/businesses",       dropdown: "businesses" },
-    { name: "Institutions",     href: "/institutions",     dropdown: null },
+    { name: "Institutions",     href: "/institutions",     dropdown: "institutions" },
     { name: "Developers",       href: "/developers",       dropdown: null },
     { name: "Company",          href: "/company",          dropdown: null },
   ];
@@ -281,8 +359,9 @@ export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
       </div>
 
       {/* Dropdowns */}
-      {activeDropdown === "individuals" && <IndividualsDropdown onClose={closeAll} />}
-      {activeDropdown === "businesses"  && <BusinessesDropdown  onClose={closeAll} />}
+      {activeDropdown === "individuals"  && <IndividualsDropdown  onClose={closeAll} />}
+      {activeDropdown === "businesses"   && <BusinessesDropdown   onClose={closeAll} />}
+      {activeDropdown === "institutions" && <InstitutionsDropdown onClose={closeAll} />}
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
