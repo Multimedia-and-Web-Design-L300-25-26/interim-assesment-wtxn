@@ -14,7 +14,7 @@ export function Hero() {
             <img
               src={heroImage}
               alt="Coinbase App Mockup"
-              className="absolute inset-0 w-[200%] h-full object-cover object-left-top"
+              className="absolute inset-0 w-[240%] h-full object-cover object-left-top"
             />
           </div>
 
