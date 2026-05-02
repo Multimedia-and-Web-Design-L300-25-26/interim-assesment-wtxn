@@ -5,6 +5,7 @@ import {
   CreditCard, Wallet, Percent, DollarSign, PiggyBank, Smartphone,
   Briefcase, Settings, ArrowRight, Clock, Eye, Repeat2, LayoutGrid,
   Zap, Building2, Landmark, Rocket,
+  Info, Users, Newspaper, HelpCircle, Shield,
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -67,6 +68,19 @@ const developersMenu = {
     { icon: Landmark, label: "Banks & Brokerages", badge: null, desc: "Secure, regulated offerings for retail, private banking, & institutional clients" },
     { icon: Building2, label: "Payment Firms",     badge: null, desc: "Near-instant, low-cost, global payment rails for modern providers" },
     { icon: Rocket,   label: "Startups",           badge: null, desc: "Launch your business with the world's leader in crypto" },
+  ],
+};
+
+const companyMenu = {
+  left: [
+    { icon: Info,      label: "About",      badge: null, desc: "Powering the crypto economy" },
+    { icon: Users,     label: "Affiliates", badge: null, desc: "Help introduce the world to crypto" },
+    { icon: Newspaper, label: "Blog",       badge: null, desc: "Read the latest from Coinbase" },
+  ],
+  right: [
+    { icon: Briefcase,  label: "Careers",  badge: null, desc: "Work with us" },
+    { icon: HelpCircle, label: "Support",  badge: null, desc: "Find answers to your questions" },
+    { icon: Shield,     label: "Security", badge: null, desc: "The most trusted & secure" },
   ],
 };
 
@@ -304,8 +318,51 @@ function DevelopersDropdown({ onClose }: { onClose: () => void }) {
   );
 }
 
+// ── Company dropdown ───────────────────────────────────────────────────────────
+function CompanyDropdown({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="absolute top-full left-0 right-0 bg-white border-b border-border shadow-xl z-50">
+      <div className="max-w-[1200px] mx-auto px-8 py-6 flex gap-8">
+        {/* Left column */}
+        <div className="flex-1 min-w-0">
+          <div className="space-y-1">
+            {companyMenu.left.map(item => (
+              <MenuItem key={item.label} {...item} onClose={onClose} />
+            ))}
+          </div>
+        </div>
+        {/* Right column */}
+        <div className="flex-1 min-w-0">
+          <div className="space-y-1">
+            {companyMenu.right.map(item => (
+              <MenuItem key={item.label} {...item} onClose={onClose} />
+            ))}
+          </div>
+        </div>
+        {/* Promo */}
+        <div className="w-64 shrink-0 flex items-start gap-4">
+          <div className="w-28 h-24 rounded-2xl bg-primary flex items-center justify-center shrink-0 shadow-lg overflow-hidden p-3">
+            <p className="text-white text-[10px] font-bold tracking-widest uppercase leading-tight text-center">
+              CRYPTO MOVES MONEY FORWARD
+            </p>
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-foreground leading-tight mb-3">
+              Learn all about Coinbase:{" "}
+              <span className="font-normal">We're building the open financial system.</span>
+            </h3>
+            <Link href="/signup" onClick={onClose} className="text-sm font-semibold text-foreground underline hover:no-underline">
+              Create your account
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Navbar ─────────────────────────────────────────────────────────────────────
-type DropdownName = "individuals" | "businesses" | "institutions" | "developers" | null;
+type DropdownName = "individuals" | "businesses" | "institutions" | "developers" | "company" | null;
 
 export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
   const [location] = useLocation();
@@ -339,7 +396,7 @@ export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
     { name: "Businesses",       href: "/businesses",       dropdown: "businesses" },
     { name: "Institutions",     href: "/institutions",     dropdown: "institutions" },
     { name: "Developers",       href: "/developers",       dropdown: "developers" },
-    { name: "Company",          href: "/company",          dropdown: null },
+    { name: "Company",          href: "/company",          dropdown: "company" },
   ];
 
   const closeAll = () => setActiveDropdown(null);
@@ -431,6 +488,7 @@ export function Navbar({ showBanner = false }: { showBanner?: boolean }) {
       {activeDropdown === "businesses"   && <BusinessesDropdown   onClose={closeAll} />}
       {activeDropdown === "institutions" && <InstitutionsDropdown onClose={closeAll} />}
       {activeDropdown === "developers"   && <DevelopersDropdown   onClose={closeAll} />}
+      {activeDropdown === "company"      && <CompanyDropdown      onClose={closeAll} />}
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
