@@ -10,7 +10,7 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-end">
 
           {/* Left: Phone Mockup */}
-          <div className="relative order-2 lg:order-1 overflow-hidden rounded-2xl" style={{ aspectRatio: "1 / 1" }}>
+          <div className="relative order-2 lg:order-1 overflow-hidden rounded-2xl lg:-ml-16" style={{ aspectRatio: "5 / 4" }}>
             <img
               src={heroImage}
               alt="Coinbase App Mockup"
