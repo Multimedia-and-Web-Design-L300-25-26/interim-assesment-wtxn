@@ -7,27 +7,24 @@ export function Hero() {
   return (
     <section className="pt-24 pb-0 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center lg:pl-4">
 
           {/* Left: Phone Mockup */}
-          <div className="relative order-2 lg:order-1 overflow-hidden rounded-2xl" style={{ aspectRatio: "1 / 1" }}>
+          <div className="relative order-2 lg:order-1 h-[500px] sm:h-[600px] lg:h-[700px] w-[95%] lg:w-full overflow-hidden rounded-[2.5rem] lg:rounded-[3.5rem]">
             <img
               src={heroImage}
               alt="Coinbase App Mockup"
-              className="absolute inset-0 w-[200%] h-full object-cover object-left-top"
+              className="absolute w-[220%] lg:w-[210%] h-auto max-w-none -left-[4%] -top-[2%]"
             />
           </div>
 
           {/* Right: Content */}
           <div className="order-1 lg:order-2 pt-16 pb-16">
-            <h1 className="text-6xl md:text-7xl font-bold tracking-tight text-foreground leading-[1.05] mb-6">
+            <h1 className="text-6xl md:text-[72px] font-bold tracking-tight text-foreground leading-[1.05] mb-6">
               The future of finance is here.
             </h1>
-            <p className="text-base text-foreground/70 mb-2">
-              Trade crypto, stocks,<sup>2</sup> and more on a platform you can trust.
-            </p>
             <p className="text-base text-foreground/70 mb-8">
-              Sign up and get up to $2,000 in crypto.<sup>1</sup>
+              Trade crypto and more on a platform you can trust.
             </p>
             <div className="flex flex-col sm:flex-row gap-2 w-full max-w-sm">
               <Input
@@ -42,7 +39,7 @@ export function Hero() {
               </Link>
             </div>
             <p className="text-xs text-foreground/40 mt-4">
-              Securities offered by Coinbase Capital Markets (member SIPC, FINRA). Listed futures and swaps are offered via Coinbase Financial Markets ("CFM"), a NFA member firm. Crypto offered by Coinbase Inc.
+              Stocks and prediction markets not available in your jurisdiction.
             </p>
           </div>
         </div>

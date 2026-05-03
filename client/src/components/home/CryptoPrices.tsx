@@ -4,13 +4,12 @@ import { ArrowUpRight, ArrowDownRight } from "lucide-react";
 import { useState } from "react";
 
 interface Coin {
-  id: string;
+  _id: string;
   symbol: string;
   name: string;
   image: string;
-  current_price: number;
-  price_change_percentage_24h: number;
-  market_cap_rank: number;
+  price: number;
+  change24h: number;
 }
 
 function formatPrice(price: number) {
@@ -22,25 +21,18 @@ function formatPrice(price: number) {
 export function CryptoPrices() {
   const [tab, setTab] = useState<"tradable" | "gainers" | "new">("tradable");
 
-  const { data: coins, isLoading } = useQuery<Coin[]>({
-    queryKey: ["/coingecko/markets"],
+  const endpoint = tab === "gainers" ? "/api/crypto/gainers" : tab === "new" ? "/api/crypto/new" : "/api/crypto";
+
+  const { data: displayCoins, isLoading } = useQuery<Coin[]>({
+    queryKey: ["cryptoList", endpoint],
     queryFn: async () => {
-      const res = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1"
-      );
+      const res = await fetch(endpoint);
       if (!res.ok) throw new Error("Failed");
       return res.json();
     },
     refetchInterval: 60000,
     staleTime: 30000,
   });
-
-  const displayCoins = (() => {
-    if (!coins) return [];
-    if (tab === "tradable") return coins.slice(0, 6);
-    if (tab === "gainers") return [...coins].sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h).slice(0, 6);
-    return coins.slice(10, 16);
-  })();
 
   return (
     <section className="py-20 bg-[#f0f2f5]">
@@ -100,13 +92,13 @@ export function CryptoPrices() {
                       </div>
                     </div>
                   ))
-                : displayCoins.map((coin) => {
-                    const isUp = coin.price_change_percentage_24h >= 0;
+                : (displayCoins || []).map((coin) => {
+                    const isUp = coin.change24h >= 0;
                     return (
-                      <Link href={`/asset/${coin.id}`} key={coin.id}>
+                      <Link href={`/asset/${coin._id}`} key={coin._id}>
                         <div
                           className="flex items-center justify-between px-5 py-4 hover:bg-white/5 transition-colors cursor-pointer border-b border-white/5 last:border-0"
-                          data-testid={`row-widget-${coin.id}`}
+                          data-testid={`row-widget-${coin._id}`}
                         >
                           <div className="flex items-center gap-3">
                             <img src={coin.image} alt={coin.name} className="w-8 h-8 rounded-full" />
@@ -114,7 +106,7 @@ export function CryptoPrices() {
                           </div>
                           <div className="text-right">
                             <div className="text-white font-semibold text-sm">
-                              {formatPrice(coin.current_price)}
+                              {formatPrice(coin.price)}
                             </div>
                             <div
                               className={`flex items-center justify-end gap-0.5 text-xs font-semibold ${
@@ -122,7 +114,7 @@ export function CryptoPrices() {
                               }`}
                             >
                               {isUp ? <ArrowUpRight size={11} /> : <ArrowDownRight size={11} />}
-                              {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+                              {Math.abs(coin.change24h).toFixed(2)}%
                             </div>
                           </div>
                         </div>

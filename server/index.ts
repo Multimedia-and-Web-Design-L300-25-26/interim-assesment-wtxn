@@ -1,4 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
+import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
@@ -21,6 +23,14 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/coinbase_clone";
+mongoose.connect(MONGO_URI).then(() => {
+  log("Connected to MongoDB", "mongoose");
+}).catch((err) => {
+  log(`MongoDB connection error: ${err}`, "mongoose");
+});
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -93,8 +103,7 @@ app.use((req, res, next) => {
   httpServer.listen(
     {
       port,
-      host: "0.0.0.0",
-      reusePort: true,
+      host: "127.0.0.1"
     },
     () => {
       log(`serving on port ${port}`);

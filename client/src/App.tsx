@@ -14,12 +14,17 @@ import AssetDetail from "@/pages/AssetDetail";
 import Learn from "@/pages/Learn";
 import Cryptocurrencies from "@/pages/Cryptocurrencies";
 
+import Profile from "@/pages/Profile";
+
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/signup" component={SignUp} />
       <Route path="/signin" component={SignIn} />
+      <Route path="/register" component={SignUp} />
+      <Route path="/login" component={SignIn} />
+      <Route path="/profile" component={Profile} />
       <Route path="/explore" component={Explore} />
       <Route path="/asset/:symbol" component={AssetDetail} />
       <Route path="/learn" component={Learn} />
