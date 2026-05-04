@@ -1,4 +1,3 @@
-console.log("SERVER BOOTING UP...");
 import express, { type Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
