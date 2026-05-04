@@ -1,3 +1,4 @@
+# Deployment Update: 2026-05-04
 services:
   - type: web
     name: coinbase-clone
