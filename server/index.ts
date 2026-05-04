@@ -27,11 +27,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/coinbase_clone";
-mongoose.connect(MONGO_URI).then(() => {
-  log("Connected to MongoDB", "mongoose");
-}).catch((err) => {
-  log(`MongoDB connection error: ${err}`, "mongoose");
-});
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -71,6 +66,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  log("Connecting to MongoDB...", "mongoose");
+  await mongoose.connect(MONGO_URI);
+  log("Connected to MongoDB established", "mongoose");
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {
